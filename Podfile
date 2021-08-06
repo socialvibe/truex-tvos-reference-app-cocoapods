@@ -1,4 +1,3 @@
-ENV['LEGACY_BUILD_SYSTEM_ENABLED'] = "yes"
 SWIFT_VERSION = '4.0'
 
 platform :tvos, '10.0'
@@ -18,7 +17,8 @@ source 'https://github.com/Innovid/cocoapods-spec.git'
 
 target 'TruexSimpleReferenceAppCocoa' do
     use_frameworks!
-    pod 'TruexAdRendererLocalBuild', :podspec => '../TruexAdRenderer-tvOS/TruexAdRendererLocalBuild.podspec'
+
+    pod "TruexAdRenderer", "~> 3.9.10"
 end
 
 post_install do |installer|
