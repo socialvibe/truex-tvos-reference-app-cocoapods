@@ -1,3 +1,5 @@
+ENV['LEGACY_BUILD_SYSTEM_ENABLED'] = 'YES'
+
 SWIFT_VERSION = '4.0'
 
 platform :tvos, '10.0'
