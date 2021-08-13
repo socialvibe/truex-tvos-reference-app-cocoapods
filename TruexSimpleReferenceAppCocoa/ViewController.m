@@ -63,21 +63,16 @@ static int const MidrollAdBreakDimensionValue = 2;
 
 // Fake response from an ad server
 - (NSDictionary*)getFakeAdParams {
-    // workaround to always show the ad (simulates a different user each time):
-    NSString *userId = [NSUUID UUID].UUIDString;
+    // In a real app, this vastConfigUrl would be obtained by first making a request to the tag: https://get.truex.com/93be986246043e37135f943c107dbe967a9df3f4/vast?dimension_2=1&dimension_5=truex_sold&stream_position=midroll (some macros omitted here for ease of use)
+    // It's inside the <AdParameters> XML tag of the response
+    // As part of the JSON blob, the value mapped ot the "vast_config_url" key
+    NSString *vastConfigUrl = @"https://get.truex.com/93be986246043e37135f943c107dbe967a9df3f4/vast/config?asnw=&cpx_url=&dimension_2=2&stream_prosition=midroll&flag=%2Bamcb%2Bemcr%2Bslcb%2Bvicb%2Baeti-exvt&fw_key_values=&metr=0&network_user_id=98307EBE-BA32-45D2-ABD0-8E292FC78519&prof=g_as3_truex&ptgt=a&pvrn=&resp=vmap1&slid=fw_truex&ssnw=&stream_id=136083572&vdur=&vprn=";
     
-    // final string should format to (network_user_id parameter will change value each time): qa-get.truex.com/bdfe2ba97e74172a75e325d307db6cfc16f92325/vast/config?asnw=&cpx_url=&dimension_2=2&stream_prosition=midroll&flag=%2Bamcb%2Bemcr%2Bslcb%2Bvicb%2Baeti-exvt&fw_key_values=&metr=0&network_user_id=93DDE21A-6F37-425D-A6E0-671329EE6A01&prof=g_as3_truex&ptgt=a&pvrn=&resp=vmap1&slid=fw_truex&ssnw=&stream_id=136083572&vdur=&vprn=
-    NSString *vastConfigUrl = [NSString stringWithFormat:@"qa-get.truex.com/bdfe2ba97e74172a75e325d307db6cfc16f92325/vast/config?asnw=&cpx_url=&dimension_2=%d&stream_prosition=%@&flag=%%2Bamcb%%2Bemcr%%2Bslcb%%2Bvicb%%2Baeti-exvt&fw_key_values=&metr=0&network_user_id=%@&prof=g_as3_truex&ptgt=a&pvrn=&resp=vmap1&slid=fw_truex&ssnw=&stream_id=136083572&vdur=&vprn=",
-                               MidrollAdBreakDimensionValue,
-                               MIDROLL,
-                               userId];
     NSLog(@"[TRUEX DEBUG] requesting ad from Vast Config URL: %@", vastConfigUrl);
     
-    // TODO: make this configurable outside the source code
     return @{
-          @"placement_hash" : @"bdfe2ba97e74172a75e325d307db6cfc16f92325",
-          @"vast_config_url" : vastConfigUrl,
-          @"user_id" : userId
+          @"placement_hash" : @"93be986246043e37135f943c107dbe967a9df3f4",
+          @"vast_config_url" : vastConfigUrl
     };
 }
 
