@@ -1,11 +1,11 @@
-ENV['LEGACY_BUILD_SYSTEM_ENABLED'] = "yes"
-SWIFT_VERSION = '4.0'
+SWIFT_VERSION = '5.1'
 
 platform :tvos, '13.0'
 
 # Decide which CocoaPods public spec repo to use
 COCOAPODS_VERSION_MAJOR=%x( pod --version | cut -d'.' -f1 ).to_i unless defined? COCOAPODS_VERSION_MAJOR
 COCOAPODS_VERSION_MINOR=%x( pod --version | cut -d'.' -f2 ).to_i unless defined? COCOAPODS_VERSION_MINOR
+puts "using Cocoapods #{COCOAPODS_VERSION_MINOR} #{COCOAPODS_VERSION_MINOR}"
 if((COCOAPODS_VERSION_MAJOR >= 1 && COCOAPODS_VERSION_MINOR >= 8) || COCOAPODS_VERSION_MAJOR >= 2)
   # As of CocoaPods 1.8.0, the CDN link is the default public spec repo
   source 'https://cdn.cocoapods.org'
@@ -18,7 +18,10 @@ source 'https://github.com/Innovid/cocoapods-spec.git'
 
 target 'TruexSimpleReferenceAppCocoa' do
     use_frameworks!
-    pod 'TruexAdRenderer', '3.9.12'
+    # comment/uncomment as neeed for local development
+    # pod 'TruexAdRenderer', '3.9.17'
+    pod 'TruexAdRenderer', :path => '~/git/truex/cocoapod-specs-dev/TruexAdRenderer/3.9.17'
+
 end
 
 post_install do |installer|
