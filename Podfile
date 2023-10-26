@@ -18,10 +18,7 @@ source 'https://github.com/Innovid/cocoapods-spec.git'
 
 target 'TruexSimpleReferenceAppCocoa' do
     use_frameworks!
-    # comment/uncomment as neeed for local development
     pod 'TruexAdRenderer', '3.9.17'
-    #pod 'TruexAdRenderer', :path => '~/git/truex/cocoapod-specs-dev/TruexAdRenderer/3.9.17'
-    #pod "InnovidAdRenderer_xcode12.5.1", '~> 1.6.0'
 end
 
 post_install do |installer|
