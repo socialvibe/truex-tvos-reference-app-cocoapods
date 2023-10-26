@@ -1,6 +1,6 @@
 SWIFT_VERSION = '5.1'
 
-platform :tvos, '13.0'
+platform :tvos, '16.5'
 
 # Decide which CocoaPods public spec repo to use
 COCOAPODS_VERSION_MAJOR=%x( pod --version | cut -d'.' -f1 ).to_i unless defined? COCOAPODS_VERSION_MAJOR
