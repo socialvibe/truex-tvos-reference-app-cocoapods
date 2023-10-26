@@ -5,7 +5,6 @@ platform :tvos, '13.0'
 # Decide which CocoaPods public spec repo to use
 COCOAPODS_VERSION_MAJOR=%x( pod --version | cut -d'.' -f1 ).to_i unless defined? COCOAPODS_VERSION_MAJOR
 COCOAPODS_VERSION_MINOR=%x( pod --version | cut -d'.' -f2 ).to_i unless defined? COCOAPODS_VERSION_MINOR
-puts "using Cocoapods #{COCOAPODS_VERSION_MINOR} #{COCOAPODS_VERSION_MINOR}"
 if((COCOAPODS_VERSION_MAJOR >= 1 && COCOAPODS_VERSION_MINOR >= 8) || COCOAPODS_VERSION_MAJOR >= 2)
   # As of CocoaPods 1.8.0, the CDN link is the default public spec repo
   source 'https://cdn.cocoapods.org'
@@ -13,15 +12,16 @@ else
   source 'https://github.com/CocoaPods/Specs.git'
 end
 
-source 'https://github.com/socialvibe/cocoapod-specs.git'
+#source 'https://github.com/socialvibe/cocoapod-specs.git'
+source 'ssh://git@github.com/socialvibe/cocoapod-specs-dev.git' # for development
 source 'https://github.com/Innovid/cocoapods-spec.git'
 
 target 'TruexSimpleReferenceAppCocoa' do
     use_frameworks!
     # comment/uncomment as neeed for local development
-    # pod 'TruexAdRenderer', '3.9.17'
-    pod 'TruexAdRenderer', :path => '~/git/truex/cocoapod-specs-dev/TruexAdRenderer/3.9.17'
-
+    pod 'TruexAdRenderer', '3.9.17'
+    #pod 'TruexAdRenderer', :path => '~/git/truex/cocoapod-specs-dev/TruexAdRenderer/3.9.17'
+    #pod "InnovidAdRenderer_xcode12.5.1", '~> 1.6.0'
 end
 
 post_install do |installer|
