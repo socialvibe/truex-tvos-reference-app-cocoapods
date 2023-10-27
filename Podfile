@@ -12,13 +12,13 @@ else
   source 'https://github.com/CocoaPods/Specs.git'
 end
 
-source 'https://github.com/socialvibe/cocoapod-specs.git'
-#source 'ssh://git@github.com/socialvibe/cocoapod-specs-dev.git' # for development
+#source 'https://github.com/socialvibe/cocoapod-specs.git'
+source 'ssh://git@github.com/socialvibe/cocoapod-specs-dev.git' # for development
 source 'https://github.com/Innovid/cocoapods-spec.git'
 
 target 'TruexSimpleReferenceAppCocoa' do
     use_frameworks!
-    pod 'TruexAdRenderer', '3.9.17'
+    pod 'TruexAdRenderer', '3.9.18'
 end
 
 post_install do |installer|
