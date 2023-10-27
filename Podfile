@@ -12,8 +12,7 @@ else
   source 'https://github.com/CocoaPods/Specs.git'
 end
 
-#source 'https://github.com/socialvibe/cocoapod-specs.git'
-source 'ssh://git@github.com/socialvibe/cocoapod-specs-dev.git' # for development
+source 'https://github.com/socialvibe/cocoapod-specs.git'
 source 'https://github.com/Innovid/cocoapods-spec.git'
 
 target 'TruexSimpleReferenceAppCocoa' do
