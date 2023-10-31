@@ -8,7 +8,7 @@ PODS:
     - SDWebImage/Core (= 4.4.8)
   - SDWebImage/Core (4.4.8)
   - Starscream (3.1.1)
-  - TruexAdRenderer (3.9.18):
+  - TruexAdRenderer (3.10.0):
     - InnovidAdRenderer_xcode12.5.1 (~> 1.6.0)
     - PusherSwift (= 8.0)
     - SDWebImage (~> 4.4.0)
@@ -16,7 +16,7 @@ PODS:
   - TVOS360Video (1.1.3)
 
 DEPENDENCIES:
-  - TruexAdRenderer (= 3.9.18)
+  - TruexAdRenderer (= 3.10.0)
 
 SPEC REPOS:
   https://github.com/Innovid/cocoapods-spec.git:
@@ -36,9 +36,9 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
-  TruexAdRenderer: c77fe3b80d82608db4d39bf655e2bb0c42fb0ee7
+  TruexAdRenderer: 19073c046e6a68abdc7ef11e2b9b617a368ae583
   TVOS360Video: cb48b398a70e71e8335e859d3715f847e184621c
 
-PODFILE CHECKSUM: 52ae32c87af0a2f2088aee7ea777d3e5b607daa2
+PODFILE CHECKSUM: ca68b4b1f3d4db3e186ac14961ac554aeade57c3
 
 COCOAPODS: 1.13.0

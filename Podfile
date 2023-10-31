@@ -17,7 +17,7 @@ source 'https://github.com/Innovid/cocoapods-spec.git'
 
 target 'TruexSimpleReferenceAppCocoa' do
     use_frameworks!
-    pod 'TruexAdRenderer', '3.9.18'
+    pod 'TruexAdRenderer', '3.10.0'
 end
 
 post_install do |installer|
