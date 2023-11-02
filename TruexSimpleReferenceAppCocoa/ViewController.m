@@ -67,7 +67,7 @@ static int const MidrollAdBreakDimensionValue = 2;
     NSString *userId = [NSUUID UUID].UUIDString;
     
     // final string should format to (network_user_id parameter will change value each time):
-    NSString *innovidTvosVastConfigUrl = [NSString stringWithFormat:@"https://qa-get.truex.com/bdfe2ba97e74172a75e325d307db6cfc16f92325/vast/config?dimension_1=test&dimension_2=%d&stream_position=%@ network_user_id=%@",
+    NSString *innovidTvosVastConfigUrl = [NSString stringWithFormat:@"https://qa-get.truex.com/f8b8376d969b5556f5abc255c58597e566a0d405/vast/config?dimension_1=test&dimension_2=%d&stream_position=%@ network_user_id=%@",
                                MidrollAdBreakDimensionValue,
                                MIDROLL,
                                userId];
