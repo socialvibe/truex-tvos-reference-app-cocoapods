@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -107,7 +107,6 @@
 				40E7C9DE26B46CC300C41DC5 /* Frameworks */,
 				40E7C9DF26B46CC300C41DC5 /* Resources */,
 				F593EBE8FECE7E736774E3B6 /* [CP] Embed Pods Frameworks */,
-				F02ECBCB24B2AD3FCEDF308B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -183,23 +182,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F02ECBCB24B2AD3FCEDF308B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TruexSimpleReferenceAppCocoa/Pods-TruexSimpleReferenceAppCocoa-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TruexSimpleReferenceAppCocoa/Pods-TruexSimpleReferenceAppCocoa-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TruexSimpleReferenceAppCocoa/Pods-TruexSimpleReferenceAppCocoa-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F593EBE8FECE7E736774E3B6 /* [CP] Embed Pods Frameworks */ = {
@@ -309,7 +291,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = appletvos;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
+				TVOS_DEPLOYMENT_TARGET = 16.5;
 			};
 			name = Debug;
 		};
@@ -361,7 +343,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = appletvos;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
+				TVOS_DEPLOYMENT_TARGET = 16.5;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -379,10 +361,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.truex.simplereferenceappcocoa.TruexSimpleReferenceAppCocoa;
+				PRODUCT_BUNDLE_IDENTIFIER = com.truex.simplereferenceappcocoa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.5;
 			};
 			name = Debug;
 		};
@@ -399,10 +382,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.truex.simplereferenceappcocoa.TruexSimpleReferenceAppCocoa;
+				PRODUCT_BUNDLE_IDENTIFIER = com.truex.simplereferenceappcocoa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.5;
 			};
 			name = Release;
 		};

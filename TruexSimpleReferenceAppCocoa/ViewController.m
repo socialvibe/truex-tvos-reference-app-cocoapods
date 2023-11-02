@@ -53,7 +53,7 @@ static int const MidrollAdBreakDimensionValue = 2;
 }
 
 - (TruexAdRenderer*)initializeAdRenderer:(NSString *)adSlotType {
-    TruexAdRenderer *renderer = [[TruexAdRenderer alloc] initWithUrl:@""
+    TruexAdRenderer *renderer = [[TruexAdRenderer alloc] initWithUrl:@"https://media.truex.com/placeholder.js"
                                                         adParameters:[self getFakeAdParams]
                                                             slotType:adSlotType];
     self.currentAdSlotType = adSlotType;
@@ -66,11 +66,16 @@ static int const MidrollAdBreakDimensionValue = 2;
     // workaround to always show the ad (simulates a different user each time):
     NSString *userId = [NSUUID UUID].UUIDString;
     
-    // final string should format to (network_user_id parameter will change value each time): qa-get.truex.com/bdfe2ba97e74172a75e325d307db6cfc16f92325/vast/config?asnw=&cpx_url=&dimension_2=2&stream_prosition=midroll&flag=%2Bamcb%2Bemcr%2Bslcb%2Bvicb%2Baeti-exvt&fw_key_values=&metr=0&network_user_id=93DDE21A-6F37-425D-A6E0-671329EE6A01&prof=g_as3_truex&ptgt=a&pvrn=&resp=vmap1&slid=fw_truex&ssnw=&stream_id=136083572&vdur=&vprn=
-    NSString *vastConfigUrl = [NSString stringWithFormat:@"qa-get.truex.com/bdfe2ba97e74172a75e325d307db6cfc16f92325/vast/config?asnw=&cpx_url=&dimension_2=%d&stream_prosition=%@&flag=%%2Bamcb%%2Bemcr%%2Bslcb%%2Bvicb%%2Baeti-exvt&fw_key_values=&metr=0&network_user_id=%@&prof=g_as3_truex&ptgt=a&pvrn=&resp=vmap1&slid=fw_truex&ssnw=&stream_id=136083572&vdur=&vprn=",
+    // final string should format to (network_user_id parameter will change value each time):
+    NSString *innovidTvosVastConfigUrl = [NSString stringWithFormat:@"https://qa-get.truex.com/f8b8376d969b5556f5abc255c58597e566a0d405/vast/config?dimension_1=test&dimension_2=%d&stream_position=%@ network_user_id=%@",
                                MidrollAdBreakDimensionValue,
                                MIDROLL,
                                userId];
+    NSString *tvmlVastConfigUrl = [NSString stringWithFormat:@"https://qa-get.truex.com/c250f9806e2c0c310fc5a62e86c9805d55c1ac07/vast/config?dimension_1=test&dimension_2=%d&stream_position=%@ network_user_id=%@",
+                               MidrollAdBreakDimensionValue,
+                               MIDROLL,
+                               userId];
+    NSString *vastConfigUrl = innovidTvosVastConfigUrl;
     NSLog(@"[TRUEX DEBUG] requesting ad from Vast Config URL: %@", vastConfigUrl);
     
     // TODO: make this configurable outside the source code

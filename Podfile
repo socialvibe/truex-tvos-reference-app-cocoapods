@@ -1,7 +1,6 @@
-ENV['LEGACY_BUILD_SYSTEM_ENABLED'] = "yes"
-SWIFT_VERSION = '4.0'
+SWIFT_VERSION = '5.1'
 
-platform :tvos, '13.0'
+platform :tvos, '16.5'
 
 # Decide which CocoaPods public spec repo to use
 COCOAPODS_VERSION_MAJOR=%x( pod --version | cut -d'.' -f1 ).to_i unless defined? COCOAPODS_VERSION_MAJOR
@@ -18,7 +17,7 @@ source 'https://github.com/Innovid/cocoapods-spec.git'
 
 target 'TruexSimpleReferenceAppCocoa' do
     use_frameworks!
-    pod 'TruexAdRenderer', '3.9.12'
+    pod 'TruexAdRenderer', '3.10.0'
 end
 
 post_install do |installer|
