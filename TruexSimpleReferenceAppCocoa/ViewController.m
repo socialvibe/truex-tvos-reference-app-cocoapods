@@ -67,20 +67,13 @@ static int const MidrollAdBreakDimensionValue = 2;
     NSString *userId = [NSUUID UUID].UUIDString;
     
     // final string should format to (network_user_id parameter will change value each time):
-    NSString *innovidTvosVastConfigUrl = [NSString stringWithFormat:@"https://qa-get.truex.com/f8b8376d969b5556f5abc255c58597e566a0d405/vast/config?dimension_1=test&dimension_2=%d&stream_position=%@ network_user_id=%@",
-                               MidrollAdBreakDimensionValue,
-                               MIDROLL,
-                               userId];
-    NSString *tvmlVastConfigUrl = [NSString stringWithFormat:@"https://qa-get.truex.com/c250f9806e2c0c310fc5a62e86c9805d55c1ac07/vast/config?dimension_1=test&dimension_2=%d&stream_position=%@ network_user_id=%@",
-                               MidrollAdBreakDimensionValue,
-                               MIDROLL,
-                               userId];
-    NSString *vastConfigUrl = innovidTvosVastConfigUrl;
+    NSString *amcTestPlacementUrl = [NSString stringWithFormat:@"https://get.truex.com/8089d168cc3fc4103e2bd46f055ea925dc6ae1d0/vast/config?&ip=68.201.71.132& network_user_id=%@", userId];
+    NSString *vastConfigUrl = amcTestPlacementUrl;
     NSLog(@"[TRUEX DEBUG] requesting ad from Vast Config URL: %@", vastConfigUrl);
     
     // TODO: make this configurable outside the source code
     return @{
-          @"placement_hash" : @"bdfe2ba97e74172a75e325d307db6cfc16f92325",
+          @"placement_hash" : @"8089d168cc3fc4103e2bd46f055ea925dc6ae1d0",
           @"vast_config_url" : vastConfigUrl,
           @"user_id" : userId
     };
