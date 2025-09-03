@@ -16,6 +16,7 @@
 @property AVPlayerViewController *playerController;
 @property TruexAdRenderer *adRenderer;
 @property NSString *currentAdSlotType;
+@property BOOL playbackStarted;
 
 @end
 
@@ -39,7 +40,16 @@ static int const MidrollAdBreakDimensionValue = 2;
 
     [self setAdBreaks:self.player];
 
-    self.adRenderer = [self initializeAdRenderer:MIDROLL];
+    self.playbackStarted = NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!_playbackStarted) {
+        _playbackStarted = YES;
+        [self.player pause];
+        self.adRenderer = [self initializeAdRenderer:MIDROLL];
+    }
 }
 
 - (void)setAdBreaks:(AVPlayer *)player {
