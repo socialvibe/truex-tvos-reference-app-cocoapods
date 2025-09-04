@@ -47,7 +47,7 @@ static int const MidrollAdBreakDimensionValue = 2;
     if (!_playbackStarted) {
         _playbackStarted = YES;
         [self.player pause];
-        
+
         NSDictionary* adParameters = [self getFakeAdParams];
         self.adRenderer = [[TruexAdRenderer alloc] initWithAdParameters:adParameters delegate:self];
         [self.adRenderer start:self];
@@ -66,18 +66,25 @@ static int const MidrollAdBreakDimensionValue = 2;
 
 // Fake response from an ad server
 - (NSDictionary*)getFakeAdParams {
-    // workaround to always show the ad (simulates a different user each time):
+    // Workaround to always show the ad (simulates a different user each time):
+    // The ip arg is to allow dev and testing outside the US, should not be present for a real ad.
     NSString *userId = [NSUUID UUID].UUIDString;
-
-    // final string should format to (network_user_id parameter will change value each time):
-    NSString *amcTestPlacementUrl = [NSString stringWithFormat:@"https://get.truex.com/8089d168cc3fc4103e2bd46f055ea925dc6ae1d0/vast/config?&ip=68.201.71.132&network_user_id=%@", userId];
-    NSString *vastConfigUrl = amcTestPlacementUrl;
+    NSString *vastConfigUrl = [NSString stringWithFormat:@"https://get.truex.com/8089d168cc3fc4103e2bd46f055ea925dc6ae1d0/vast/config?network_user_id=%@&ip=68.201.71.132", userId];
     NSLog(@"[TRUEX DEBUG] requesting ad from Vast Config URL: %@", vastConfigUrl);
 
     // TODO: make this configurable outside the source code
     return @{
           @"vast_config_url" : vastConfigUrl
     };
+}
+
+- (void)alertWithTitle:(NSString*)title message:(NSString*)message completion:(void (^)(void))completionCallback;
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:nil style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:completionCallback];
 }
 
 // MARK: - true[X] Ad Renderer Delegate Methods
@@ -96,10 +103,13 @@ static int const MidrollAdBreakDimensionValue = 2;
 }
 
 -(void) onAdError:(NSString *)errorMessage {
-    [self.player play];
+    [self alertWithTitle:@"onAdError" message:errorMessage completion:^{
+        [self.player play];
+    }];
 }
 
 -(void) onNoAdsAvailable {
+    NSLog(@"No truex ads were available, fallback ads will play");
     [self.player play];
 }
 
