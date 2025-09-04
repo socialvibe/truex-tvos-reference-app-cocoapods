@@ -15,7 +15,7 @@
 @property AVPlayer *player;
 @property AVPlayerViewController *playerController;
 @property TruexAdRenderer *adRenderer;
-@property NSString *currentAdSlotType;
+@property BOOL playbackStarted;
 
 @end
 
@@ -39,7 +39,19 @@ static int const MidrollAdBreakDimensionValue = 2;
 
     [self setAdBreaks:self.player];
 
-    self.adRenderer = [self initializeAdRenderer:MIDROLL];
+    self.playbackStarted = NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!_playbackStarted) {
+        _playbackStarted = YES;
+        [self.player pause];
+
+        NSDictionary* adParameters = [self getFakeAdParams];
+        self.adRenderer = [[TruexAdRenderer alloc] initWithAdParameters:adParameters delegate:self];
+        [self.adRenderer start:self];
+    }
 }
 
 - (void)setAdBreaks:(AVPlayer *)player {
@@ -52,38 +64,27 @@ static int const MidrollAdBreakDimensionValue = 2;
     ];
 }
 
-- (TruexAdRenderer*)initializeAdRenderer:(NSString *)adSlotType {
-    TruexAdRenderer *renderer = [[TruexAdRenderer alloc] initWithUrl:@"https://media.truex.com/placeholder.js"
-                                                        adParameters:[self getFakeAdParams]
-                                                            slotType:adSlotType];
-    self.currentAdSlotType = adSlotType;
-    renderer.delegate = self;
-    return renderer;
-}
-
 // Fake response from an ad server
 - (NSDictionary*)getFakeAdParams {
-    // workaround to always show the ad (simulates a different user each time):
+    // Workaround to always show the ad (simulates a different user each time):
+    // The ip arg is to allow dev and testing outside the US, should not be present for a real ad.
     NSString *userId = [NSUUID UUID].UUIDString;
-    
-    // final string should format to (network_user_id parameter will change value each time):
-    NSString *innovidTvosVastConfigUrl = [NSString stringWithFormat:@"https://qa-get.truex.com/f8b8376d969b5556f5abc255c58597e566a0d405/vast/config?dimension_1=test&dimension_2=%d&stream_position=%@ network_user_id=%@",
-                               MidrollAdBreakDimensionValue,
-                               MIDROLL,
-                               userId];
-    NSString *tvmlVastConfigUrl = [NSString stringWithFormat:@"https://qa-get.truex.com/c250f9806e2c0c310fc5a62e86c9805d55c1ac07/vast/config?dimension_1=test&dimension_2=%d&stream_position=%@ network_user_id=%@",
-                               MidrollAdBreakDimensionValue,
-                               MIDROLL,
-                               userId];
-    NSString *vastConfigUrl = innovidTvosVastConfigUrl;
+    NSString *vastConfigUrl = [NSString stringWithFormat:@"https://get.truex.com/8089d168cc3fc4103e2bd46f055ea925dc6ae1d0/vast/config?network_user_id=%@&ip=68.201.71.132", userId];
     NSLog(@"[TRUEX DEBUG] requesting ad from Vast Config URL: %@", vastConfigUrl);
-    
+
     // TODO: make this configurable outside the source code
     return @{
-          @"placement_hash" : @"bdfe2ba97e74172a75e325d307db6cfc16f92325",
-          @"vast_config_url" : vastConfigUrl,
-          @"user_id" : userId
+          @"vast_config_url" : vastConfigUrl
     };
+}
+
+- (void)alertWithTitle:(NSString*)title message:(NSString*)message completion:(void (^)(void))completionCallback;
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:nil style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:completionCallback];
 }
 
 // MARK: - true[X] Ad Renderer Delegate Methods
@@ -102,19 +103,18 @@ static int const MidrollAdBreakDimensionValue = 2;
 }
 
 -(void) onAdError:(NSString *)errorMessage {
-    [self.player play];
+    [self alertWithTitle:@"onAdError" message:errorMessage completion:^{
+        [self.player play];
+    }];
 }
 
 -(void) onNoAdsAvailable {
+    NSLog(@"No truex ads were available, fallback ads will play");
     [self.player play];
 }
 
 -(void) onUserCancelStream {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void) onFetchAdComplete {
-    [self.adRenderer start:self.playerController];
 }
 
 @end
