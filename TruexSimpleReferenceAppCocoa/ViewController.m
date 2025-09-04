@@ -15,7 +15,6 @@
 @property AVPlayer *player;
 @property AVPlayerViewController *playerController;
 @property TruexAdRenderer *adRenderer;
-@property NSString *currentAdSlotType;
 @property BOOL playbackStarted;
 
 @end
@@ -48,7 +47,10 @@ static int const MidrollAdBreakDimensionValue = 2;
     if (!_playbackStarted) {
         _playbackStarted = YES;
         [self.player pause];
-        self.adRenderer = [self initializeAdRenderer:MIDROLL];
+        
+        NSDictionary* adParameters = [self getFakeAdParams];
+        self.adRenderer = [[TruexAdRenderer alloc] initWithAdParameters:adParameters delegate:self];
+        [self.adRenderer start:self];
     }
 }
 
@@ -62,30 +64,19 @@ static int const MidrollAdBreakDimensionValue = 2;
     ];
 }
 
-- (TruexAdRenderer*)initializeAdRenderer:(NSString *)adSlotType {
-    TruexAdRenderer *renderer = [[TruexAdRenderer alloc] initWithUrl:@"https://media.truex.com/placeholder.js"
-                                                        adParameters:[self getFakeAdParams]
-                                                            slotType:adSlotType];
-    self.currentAdSlotType = adSlotType;
-    renderer.delegate = self;
-    return renderer;
-}
-
 // Fake response from an ad server
 - (NSDictionary*)getFakeAdParams {
     // workaround to always show the ad (simulates a different user each time):
     NSString *userId = [NSUUID UUID].UUIDString;
-    
+
     // final string should format to (network_user_id parameter will change value each time):
-    NSString *amcTestPlacementUrl = [NSString stringWithFormat:@"https://get.truex.com/8089d168cc3fc4103e2bd46f055ea925dc6ae1d0/vast/config?&ip=68.201.71.132& network_user_id=%@", userId];
+    NSString *amcTestPlacementUrl = [NSString stringWithFormat:@"https://get.truex.com/8089d168cc3fc4103e2bd46f055ea925dc6ae1d0/vast/config?&ip=68.201.71.132&network_user_id=%@", userId];
     NSString *vastConfigUrl = amcTestPlacementUrl;
     NSLog(@"[TRUEX DEBUG] requesting ad from Vast Config URL: %@", vastConfigUrl);
-    
+
     // TODO: make this configurable outside the source code
     return @{
-          @"placement_hash" : @"8089d168cc3fc4103e2bd46f055ea925dc6ae1d0",
-          @"vast_config_url" : vastConfigUrl,
-          @"user_id" : userId
+          @"vast_config_url" : vastConfigUrl
     };
 }
 
@@ -114,10 +105,6 @@ static int const MidrollAdBreakDimensionValue = 2;
 
 -(void) onUserCancelStream {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void) onFetchAdComplete {
-    [self.adRenderer start:self.playerController];
 }
 
 @end
