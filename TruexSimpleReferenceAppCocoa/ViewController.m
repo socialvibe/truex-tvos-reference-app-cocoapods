@@ -113,8 +113,4 @@ static int const MidrollAdBreakDimensionValue = 2;
     [self.player play];
 }
 
--(void) onUserCancelStream {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 @end
